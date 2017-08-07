@@ -81,5 +81,5 @@ Compile the pylibabpogee drivers
 Uninstall
 ---------
 
-	1.
+	1. 
 	
