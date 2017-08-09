@@ -6,3 +6,6 @@ Spectrograph control software for MRO
 Go through the INSTALL.txt file in this repository.
 
 ## API Documentation
+
+
+[apogeeClasses]: 
