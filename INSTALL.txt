@@ -4,82 +4,116 @@ Install Directions for the Apogge Dev Drivers
 Here is a quick run down of what you will be doing.
 
      - Download the precompiled dev drivers for your system on http://www.randomfactory.com/downloads/
-     - Unpack the drivers.
+     - Follow the unpacking directions on http://www.randomfactory.com/apogee-lfa.html (make sure to use sudo).
      - Follow the instructions in the INSTALL but not bothering with the GUI (that would be the startapogee instruction).
      - Test the install.
-     - Compile the pylibapogee drivers (hardest part).
+     - Compile and install the pylibapogee drivers (hardest part).
      - Test that you can "import pylibapogee" in your system's Python 2.X
-     - Optional uninstall instructions.
+     - Uninstall instructions.
      
 
 Downloading Drivers
 -------------------
 
+Downloads here: http://www.randomfactory.com/downloads/
+
 This is pretty self explanatory.  Just make sure you are grabbing a 64-bit version donated by x64 in the driver name.
-For reference, I downloaded apogee-devel-3.0.3079-Ubuntu14.04-x64.tgz.  If you are using Ubuntu 16.04 then you might try the older
-versions drivers but more likely you will need to compile from source, which these instructions do not go into.
+For reference, I downloaded apogee-devel-3.0.3079-Ubuntu14.04-x64.tgz.  If you are using Ubuntu 16.04 then you might try 14.04
+if there is no precompiled driver, but most likely you will need to compile from source, which these instructions do not go into.
 
 Installing the precompiled drivers
 ----------------------------------
-Again, self explanatory.  Follow the unpacking directions at http://www.randomfactory.com/apogee-lfa.html making sure to invoke super user.
-At the "modinstall" directions you will have a GUI pop up to search for the config file which you should choose _____ (still invoke super user).
-The drivers need to be installed for the user so follow the rest of the instructions without invoking the super user.
+Again, self explanatory.  Follow the unpacking directions at http://www.randomfactory.com/apogee-lfa.html making sure to invoke super user, and.
+skip the ".../apogee_post" install intructions.  At the "modinstall" directions you will have a GUI pop up to search for the config file
+which you should choose alta_F.ini (still be using sudo).  The drivers need to be installed for the user so follow the rest of the
+instructions WITHOUT invoking the super user, but don't bother running ~/startapogee.
 
 Add this to the end of your .bashrc, or .cshrc, file:
 
-    export LD_LIBRARY_PATH=/usr/local/lib
+    export LD_LIBRARY_PATH=/opt/apogee/lib
+
+Once in, either source the file or open a new terminal/re-login.
+
+
+
+COMMENT: If you are installing this over SSH you will need to make sure to allow X11 forwarding with the -X flag.
 
 Test the install
 ----------------
 Run "/opt/apogee/bin/test_altaf".  This should display information about different arguements to pass in.  Use this and see
 if the cmaera takes a picture:
 
-       /opt/apogee/bin/test_altaf -n ~/test.fits -i 1 -s 1
+       /opt/apogee/bin/test_altaf -i ~/test.fits -t 1 -s 1
 
+If you see the following happen try replugging in the USB to the camera.:
+
+      $ /opt/apogee/bin/test_altaf -i ~/test.fits -t 1 -s 1                                                            
+        terminate called after throwing an instance of 'std::runtime_error'
+          what():  libapogee:GenOneLinuxUSB.cpp(58):libusb_open error = -3:0
+        Aborted (core dumped)
 
 Compile the pylibabpogee drivers
 --------------------------------
 
 	1. cd /opt/apogee/libapogee
-	2. Open INSTALL file.
+	2. Open INSTALL file in this directory, and read it before you doing anything.
 	3. Follow the instructions for the Python wrapper while installing both the dependencies for
-	   libapogee and pyLibapogee.  When using Ubuntu you will need to explicitely install the *-dev versions.
-	   For "swig" on Ubuntu you will need to use "sudo apt install" NOT "sudo apt-get install"
-	4. We have to make some soft links other wise the "make" will not work.
+	   libapogee and pyLibapogee.  When using Ubuntu you will need to explicitely install the *-dev versions
+	   of the dependencies.  For the "swig" dependence, on Ubuntu you will need to use "sudo apt install swig"
+	   NOT "sudo apt-get install swig".
+	4. This is a one time necessity.  We have to make some soft links other wise the "make" will not work:
 
               cd /usr/lib/x86_64-linux-gnu
 	      sudo ln -s libboost_regex.so libboost_regex-mt.so
 	      sudo ln -s libboost_regex.a libboost_regex-mt.a
 
         5. Follow the Building and Installation instructions, specific for libapogge AND pyLibapogee,
-	   in the INSTALL from step number 2 (make sure you use sudo for the make install step).
+	   located in the INSTALL from step number 2 (make sure you use sudo for the "make install" step).
 	   Make note of where the Python drivers installed which is likely /usr/local/lib/python2.7/site-packages.
 	6. One time instructions per system.  Some systems don't have .../site-packages in the Python path
-	   so we need to add in manually.
+	   so we need to add it manually.
 
-	     $ python  # make sure this is your system Python
-	     >>> import sys
-	     >>> sys.path  # verify that /usr/local/lib/python2.7/site-packages is listed or not
-	     >>> exit()
-	     $ cd /usr/local/lib/python2.7/dist-packages
-	     $ sudo -s (sometimes just su)
-	     root# echo "/usr/local/lib/python2.7/site-packages" > site-packages.pth
-	     root# exit
-	     $ python
-	     >>> import sys
-	     >>> sys.path # verify /usr/loca/lib/python2.7/site-packages is in this list; it should be 
-	     >>> import pylibapogee.pylibapogee as apg  # testing to see if pyLibapogee is there
-	     >>> exit()
+	      $ python  # make sure this is your system Python
+	      >>> import sys
+	      >>> sys.path  # verify that /usr/local/lib/python2.7/site-packages is listed or not
+	                    # if yes go to step 7 otherwise continue
+	      >>> exit()
+	      $ cd /usr/local/lib/python2.7/dist-packages
+	      $ sudo -s  # (on non ubuntu systems this is usually su)
+	      # echo "/usr/local/lib/python2.7/site-packages" > site-packages.pth
+	      # exit
+	      $ python
+	      >>> import sys
+	      >>> sys.path  # verify /usr/loca/lib/python2.7/site-packages is in this list; it should be 
+	      >>> import pylibapogee.pylibapogee as apg  # testing to see if pyLibapogee is there
+	      >>> exit()
 
 	 7. Now you are ready to start programming for your camera in Python.  Go ahead and use
 	    TestSpecCam.py in the cam folder of the Spectrograph repo.  Pass in a time in seconds
 	    when running it and an image will be created in the current directory.
 
-	    $ ./TestSpecCam.py 1
+	    	 $ ./TestSpecCam.py 1
 	
 
 Uninstall
 ---------
 
-	1. 
-	
+	1.  We need to uninstall the pyLibapogee files in /usr/local/lib/python2.7/site-packages
+
+	       $ cd /opt/apogee/libapogee
+	       $ sudo make uninstall
+	       $ sudo rm -r /usr/loca/lib/python2.7/site-packages/pylibapogee  # Erase the empty directory
+
+        2. Now we delete the local user data:
+
+	       $ rm ~/startapogee
+	       $ rm ~/.apccd.ini
+
+	3. Lastly we delete the apogee package from /opt:
+
+	       $ sudo rm -r /opt/apogee
+
+	4. If going for a full uninstall remove the following line from your .bashrc file:
+
+	       export LD_LIBRARY_PATH=/opt/apogee/lib
+	   
