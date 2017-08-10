@@ -23,12 +23,12 @@ For more extensive documentation you will need to look in the classDocs folder i
 detail in the C++ classes and functions that are DIRECTLY mapped into Python using SWIG.  All the functions across C++ and Python will
 be named the same, only the arguements that you pass in are different.
 
-Go ahead and start one of the *.html files in classDocs and move over to the classes section and pay closest attention to the classes ApogeeCam, which
+Go ahead and open one of the *.html files in classDocs and move over to the classes section, and pay closest attention to the classes ApogeeCam, which
 is inherited by CamGen2Base, which is inherited by AltaF.  This means all the functions you will be able to use in Python are documented
 in these 3 classes.  Make sure you know what inheritance is, which is to say the main class you will work with is AltaF which has access to the functions
 of CamGen2Base and ApogeeCam because of inheritance.  See the float chart above to get a visual of the layout.
 
-Again, all the functions are described in C++ terms however the types you see translate pretty easily to Python.  Here are a list
+Again, all the functions are described in C++ terms however the types you see translate pretty easily to Python.  Here is a list
 of types I found in the documentation and what I believe they will translate to in the Python functions (these only apply to the
 "[IN]" arguments described in the docs):
 
