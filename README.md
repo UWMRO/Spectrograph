@@ -30,8 +30,16 @@ of CamGen2Base and ApogeeCam because of inheritance.  See the float chart above 
 
 As for the functions you will read in the class documentation they are types in C++.  You will need to verify, but the translated type to Python
 is relatively intuitive and simpler.  Here are a list of types I found in the documentation and what I believe they will translate to in
-the Python functions:
+the Python functions (only apply to the "[IN]" arguments described in the docs):
 
-`C++` --> `Python`
+`C++` --> `Python` (examples)
+-----------------
 
-`uint16`(unsigned 16 bit integer) -->  `int`
+`const uint16` (unsigned 16 bit integer) -->  `int` (0,1,2,...)
+`bool` (Boolean) --> `bool` (True/False)
+`const std::string` --> `str` ("string")
+`double` --> `float` (1.5)
+The drivers have built in types also see (lines 641 to 712) pylibapogee.py for these.  Descriptions are given in
+the "Namespace" section of the documentation. Below is an examples
+`Apg::Status_ImageReady` --> `apg.Status_ImageReady` (after importing pylibapogee.pylibapogee as apg)
+
