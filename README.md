@@ -28,8 +28,9 @@ is inherited by CamGen2Base, which is inherited by AltaF.  This means all the fu
 in these 3 classes.  Make sure you know what inheritance is, which is to say the main class you will work with is AltaF which has access to the functions
 of CamGen2Base and ApogeeCam because of inheritance.  See the float chart above to get a visual of the layout.
 
-Again, all the functions are described using C++ code however the types you see translate pretty easily to Python.  Here are a list of types I found in the documentation and what I believe they will translate to in
-the Python functions (these only apply to the "[IN]" arguments described in the docs):
+Again, all the functions are described in C++ terms however the types you see translate pretty easily to Python.  Here are a list
+of types I found in the documentation and what I believe they will translate to in the Python functions (these only apply to the
+"[IN]" arguments described in the docs):
 
 `C++` --> `Python` (examples)
 
