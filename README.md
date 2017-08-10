@@ -31,6 +31,7 @@ of CamGen2Base and ApogeeCam because of inheritance.  See the float chart above 
 As for the functions you will read in the class documentation they are types in C++.  You will need to verify, but the translated type to Python
 is relatively intuitive and simpler.  Here are a list of types I found in the documentation and what I believe they will translate to in
 the Python functions:
-    `C++` -> `Python`
 
-    `uint16`(unsigned 16 bit integer) -->  `int`
+`C++` --> `Python`
+
+`uint16`(unsigned 16 bit integer) -->  `int`
